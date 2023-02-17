@@ -26,9 +26,7 @@ export const Product = () => {
     e.preventDefault();
     dispatch(addProduct({ ...product, quantity, colors, sizes }));
   };
-  console.log(product);
-  console.log(colors);
-  console.log(sizes);
+
   return (
     <>
       <Navbar />

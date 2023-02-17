@@ -13,16 +13,15 @@ const Checkout = () => {
   // stripe;
   const navigate = useNavigate();
   const handleClick = async (token) => {
-    console.log(token);
     try {
       const res = await axios.post("http://localhost:5000/payment", {
         userId: user._id,
         product: cart.products,
         address,
         tokenId: token.id,
+        totalQuantity: cart.quantity,
         amount: cart.total * 100,
       });
-      console.log(res);
       navigate("/success");
     } catch (error) {
       console.log(error);

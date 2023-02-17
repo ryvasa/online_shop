@@ -1,4 +1,5 @@
 import { publicRequest } from "../requestMethode";
+import { getOrderFailure, getOrderStart, getOrderSuccess } from "./orderRedux";
 import {
   getProductFailure,
   getProductStart,
@@ -28,5 +29,14 @@ export const updateUsers = async (id, user, dispatch) => {
     console.log(err);
   } catch (err) {
     dispatch(updateUserFailure());
+  }
+};
+export const getOrders = async (userId, dispatch) => {
+  dispatch(getOrderStart());
+  try {
+    const res = await publicRequest.get(`/order/${userId}`);
+    dispatch(getOrderSuccess(res.data));
+  } catch (err) {
+    dispatch(getOrderFailure());
   }
 };

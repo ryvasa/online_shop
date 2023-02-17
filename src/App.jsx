@@ -12,6 +12,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Checkout from "./pages/Checkout";
 import Success from "./pages/Success";
+import Order from "./pages/Order";
+import DetailOrder from "./pages/DetailOrder";
 
 axios.defaults.withCredentials = true;
 function App() {
@@ -30,6 +32,8 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/success" element={<Success />} />
+        <Route path="/order" element={<Order />} />
+        <Route path="/order/:id" element={<DetailOrder />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="*" element={<Notfound />} />
