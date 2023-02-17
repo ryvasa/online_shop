@@ -1,0 +1,35 @@
+# dependencies
+/node_modules
+
+# production build files
+/build
+
+# development environment
+/.env
+/.env.local
+/.env.development.local
+/.env.test.local
+/.env.production.local
+.env
+# misc
+.DS_Store
+*.log
+*.rest
+npm-debug.log*
+
+# IDE-specific files
+.idea
+.vscode
+*.sublime-workspace
+*.sublime-project
+
+# OS-specific files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# package-lock.json
+package-lock.json
+
+# ignore .idea directory in the root
+/.idea
