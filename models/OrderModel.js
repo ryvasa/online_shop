@@ -11,12 +11,25 @@ const OrderSchema = new mongoose.Schema(
         productId: {
           type: String,
         },
+        productName: {
+          type: String,
+        },
+        price: {
+          type: Number,
+        },
+        img: {
+          type: Array,
+        },
         quantity: {
           type: Number,
           default: 1,
         },
       },
     ],
+    totalQuantity: {
+      type: String,
+      required: true,
+    },
     amount: {
       type: Number,
       required: true,

@@ -5,6 +5,7 @@ import userRoute from "./routes/userRoute.js";
 import authRoute from "./routes/authRoute.js";
 import productRoute from "./routes/productRoute.js";
 import stripeRoute from "./routes/stripeRoute.js";
+import orderRoute from "./routes/orderRoute.js";
 import cartRoute from "./routes/cartRoute.js";
 import cookieParser from "cookie-parser";
 import expressWinston from "express-winston";
@@ -59,6 +60,7 @@ app.use(authRoute);
 app.use(productRoute);
 app.use(cartRoute);
 app.use(stripeRoute);
+app.use(orderRoute);
 
 const port = process.env.PORT;
 
