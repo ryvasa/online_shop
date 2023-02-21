@@ -1,6 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { publicRequest } from "../requestMethode";
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+
+  const handleEmailChange = (event) => {
+    if (error) {
+      setError("");
+    }
+    setEmail(event.target.value);
+  };
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await publicRequest.post("/subscribe", { email });
+    } catch (error) {
+      console.log(error);
+      setError(error.response.data);
+    }
+  };
   return (
     <footer className="footer p-10 bg-base-300 text-base-content relative">
       <div>
@@ -73,14 +92,25 @@ const Footer = () => {
         <div className="pt-5">
           <div className="relative ">
             <input
-              type="text"
+              onChange={handleEmailChange}
+              type="email"
+              name="email"
+              id="email"
               placeholder="username@site.com"
               className="input input-bordered w-full pr-16"
             />
-            <button className="btn btn-primary absolute top-0 right-0 rounded-l-none">
+            <button
+              onClick={handleClick}
+              className="btn btn-primary absolute top-0 right-0 rounded-l-none"
+            >
               Subscribe
             </button>
           </div>
+          {error && (
+            <span className="text-red-600 pt-2 relative flex justify-center">
+              {error}
+            </span>
+          )}
         </div>
       </div>
     </footer>

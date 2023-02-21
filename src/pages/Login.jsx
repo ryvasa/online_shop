@@ -17,7 +17,6 @@ const Login = () => {
     try {
       const res = await axios.post("http://localhost:5000/login", user);
       dispatch(loginSuccess(res.data.details));
-
       navigate("/");
     } catch (err) {
       dispatch(loginFailure());

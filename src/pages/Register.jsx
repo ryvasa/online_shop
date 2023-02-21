@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -14,25 +14,29 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const user = { username, email, password, confirmPassword, phone };
 
+  useEffect(() => {
+    setError("");
+  }, [email, password, phone, username, confirmPassword]);
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch(registerStart());
     try {
       const res = await axios.post("http://localhost:5000/register", user);
-      dispatch(registerSuccess(res.data));
+      dispatch(registerSuccess(res.data.details));
       navigate("/");
     } catch (err) {
-      console.log(err);
       dispatch(registerFailure());
+      setError(err.response.data);
     }
   };
-  console.log(user);
+
   return (
     <div>
       <div className="hero min-h-screen bg-base-200">
@@ -40,6 +44,11 @@ const Register = () => {
           <span className="text-center pt-5 font-semibold text-2xl">
             Register
           </span>
+          {error && (
+            <span className="text-red-600 pt-2 relative flex justify-center">
+              {error}
+            </span>
+          )}
           <div className="card-body flex-row">
             <div className="flex-1 pr-6">
               <div className="form-control">

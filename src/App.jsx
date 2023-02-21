@@ -3,7 +3,7 @@ import Cart from "./pages/Cart";
 import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import { Notfound } from "./pages/Notfound";
+import Notfound from "./pages/Notfound";
 import Product from "./pages/Product";
 import Products from "./pages/Products";
 import Profile from "./pages/Profile";
@@ -14,6 +14,7 @@ import Checkout from "./pages/Checkout";
 import Success from "./pages/Success";
 import Order from "./pages/Order";
 import DetailOrder from "./pages/DetailOrder";
+import Contoh from "./pages/contoh";
 
 axios.defaults.withCredentials = true;
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/order" element={<Order />} />
         <Route path="/order/:id" element={<DetailOrder />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/contoh" element={<Contoh />} />
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="*" element={<Notfound />} />
       </Routes>

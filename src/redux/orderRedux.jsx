@@ -21,10 +21,27 @@ export const orderSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
+    deleteOrderStart: (state) => {
+      state.isFetching = true;
+    },
+    deleteOrderSuccess: (state, action) => {
+      state.isFetching = false;
+      state.orders = null;
+    },
+    deleteOrderFailure: (state) => {
+      state.isFetching = false;
+      state.error = true;
+    },
   },
 });
 
-export const { getOrderStart, getOrderSuccess, getOrderFailure } =
-  orderSlice.actions;
+export const {
+  getOrderStart,
+  getOrderSuccess,
+  getOrderFailure,
+  deleteOrderStart,
+  deleteOrderSuccess,
+  deleteOrderFailure,
+} = orderSlice.actions;
 
 export default orderSlice.reducer;

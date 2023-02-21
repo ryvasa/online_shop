@@ -1,5 +1,12 @@
 import { publicRequest } from "../requestMethode";
-import { getOrderFailure, getOrderStart, getOrderSuccess } from "./orderRedux";
+import {
+  deleteOrderFailure,
+  deleteOrderStart,
+  deleteOrderSuccess,
+  getOrderFailure,
+  getOrderStart,
+  getOrderSuccess,
+} from "./orderRedux";
 import {
   getProductFailure,
   getProductStart,
@@ -39,4 +46,9 @@ export const getOrders = async (userId, dispatch) => {
   } catch (err) {
     dispatch(getOrderFailure());
   }
+};
+export const deleteOrders = (dispatch) => {
+  dispatch(deleteOrderStart());
+  dispatch(deleteOrderSuccess());
+  dispatch(deleteOrderFailure());
 };

@@ -9,25 +9,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logoutFailure, logoutStart, logoutSuccess } from "../redux/userRedux";
 import axios from "axios";
+import { useEffect } from "react";
+import { deleteOrders, getOrders } from "../redux/apiCalls";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
   const cart = useSelector((state) => state.cart);
   const product = useSelector((state) => state.product.products);
   const order = useSelector((state) => state.order.orders);
 
-  const dispatch = useDispatch();
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch(logoutStart());
     try {
-      const res = await axios.post("http://localhost:5000/logout");
-      dispatch(logoutSuccess(res.cookies));
+      const res = await axios.delete("http://localhost:5000/logout", user._id);
+      dispatch(logoutSuccess());
     } catch (err) {
       dispatch(logoutFailure());
     }
   };
-  console.log();
+
+  useEffect(() => {
+    if (!user) {
+      deleteOrders(dispatch);
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      getOrders(user._id, dispatch);
+    } else {
+      return;
+    }
+  }, [dispatch, cart, user, product, order]);
   return (
     <div className="navbar  bg-white h-9 drop-shadow-lg fixed   z-[90]">
       <div className="flex-1">
@@ -42,7 +57,7 @@ const Navbar = () => {
             <button className="btn btn-ghost btn-circle ">
               <div className="indicator">
                 <IoShirt className="h-6 w-6" />
-                {cart.quantity > 0 && (
+                {product.length > 0 && (
                   <span className=" badge-primary shadow-lg badge badge-sm indicator-item">
                     {product.length}
                   </span>
@@ -51,20 +66,22 @@ const Navbar = () => {
             </button>
           </div>
         </Link>
-        <Link to={"/order"}>
-          <div className="tooltip tooltip-bottom" data-tip="order">
-            <button className="btn btn-ghost btn-circle">
-              <div className="indicator">
-                <FaShoppingBag className="h-6 w-6" />
-                {cart.quantity > 0 && (
-                  <span className=" badge-primary shadow-lg badge badge-sm indicator-item">
-                    {order.length}
-                  </span>
-                )}
-              </div>
-            </button>
-          </div>
-        </Link>
+        {user && (
+          <Link to={"/order"}>
+            <div className="tooltip tooltip-bottom" data-tip="order">
+              <button className="btn btn-ghost btn-circle">
+                <div className="indicator">
+                  <FaShoppingBag className="h-6 w-6" />
+                  {order.length > 0 && (
+                    <span className=" badge-primary shadow-lg badge badge-sm indicator-item">
+                      {order ? order.length : 0}
+                    </span>
+                  )}
+                </div>
+              </button>
+            </div>
+          </Link>
+        )}
         <div className="dropdown dropdown-end pr-3 ">
           <div className="tooltip tooltip-bottom" data-tip="cart">
             <label tabIndex={0} className="btn btn-ghost  btn-circle">

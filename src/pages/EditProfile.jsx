@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { updateUsers } from "../redux/apiCalls";
-import { Notfound } from "./Notfound";
+import Notfound from "./Notfound";
 import { useState, useEffect } from "react";
 import {
   getStorage,
@@ -15,12 +15,17 @@ import {
 import app from "../firebase";
 
 const EditProfile = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user.currentUser);
+
+  if (!user) {
+    navigate("/");
+    return;
+  }
+  const dispatch = useDispatch();
   const [inputs, setInputs] = useState({});
   const [file, setFile] = useState(null);
-  const currentUser = useSelector((state) => state.user.currentUser);
-  const id = currentUser._id;
+  const id = user._id;
 
   const handleChange = (e) => {
     setInputs((prev) => {
@@ -76,137 +81,140 @@ const EditProfile = () => {
     navigate("/profile");
   };
   return (
-    <div>
+    <>
       <Navbar />
-      {currentUser._id ? (
-        <>
-          <Link to={"/profile"} className="ml-4 flex pt-20 items-center">
-            <FaAngleLeft />
-            Profile
-          </Link>
-          <div className="lg:flex max-w-full min-h-screen pb-28">
-            <div className="flex-1 p-2 mr-5 rounded-lg shadow-lg flex items-center justify-center ">
-              <div className="flex-colum">
-                <div className="p-10 w-full flex items-center justify-center ">
-                  <img
-                    src={
-                      currentUser.img
-                        ? currentUser.img
-                        : "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"
-                    }
-                    alt=""
+
+      <div className="text-md pl-3 breadcrumbs pt-20  font-bold">
+        <ul>
+          <li>
+            <Link to={"/"}>Home</Link>
+          </li>
+          <li>
+            <Link to={"/profile"}>Profile</Link>
+          </li>
+          <li>Edit Profile</li>
+        </ul>
+      </div>
+      <div className="lg:flex max-w-full min-h-screen pb-28">
+        <div className="flex-1 p-2 mr-5 rounded-lg shadow-lg flex items-center justify-center ">
+          <div className="flex-colum">
+            <div className="p-10 w-full flex items-center justify-center ">
+              <img
+                src={
+                  user.img
+                    ? user.img
+                    : "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"
+                }
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+        <div className="flex-[2] p-5 rounded-lg shadow-lg">
+          <div className="flex max-w-full justify-center">
+            <label htmlFor="file" className=" btn btn-primary shadow-md ">
+              <FaFileImage /> Avatar
+            </label>
+            <input
+              id="file"
+              name="file"
+              onChange={(e) => setFile(e.target.files[0])}
+              type="file"
+              style={{ display: "none" }}
+            />
+          </div>
+          <div className="id mx-7 mt-7">
+            <span>ID : {user._id}</span>
+          </div>
+          <div className="flex">
+            <div className="flex-1">
+              <div className="form-control m-7">
+                <label className="input-group">
+                  <span className="w-28 ">Username</span>
+                  <input
+                    name="username"
+                    onChange={handleChange}
+                    type="text"
+                    placeholder={user.username}
+                    className="input input-bordered"
                   />
-                </div>
+                </label>
+              </div>
+              <div className="form-control m-7">
+                <label className="input-group">
+                  <span className="w-28 ">Email</span>
+                  <input
+                    onChange={handleChange}
+                    name="email"
+                    type="email"
+                    placeholder={user.email}
+                    className="input input-bordered"
+                  />
+                </label>
+              </div>
+              <div className="form-control m-7">
+                <label className="input-group">
+                  <span className="w-28 ">Phone</span>
+                  <input
+                    onChange={handleChange}
+                    name="phone"
+                    type="number"
+                    placeholder={user.phone}
+                    className="input input-bordered"
+                  />
+                </label>
               </div>
             </div>
-            <div className="flex-[2] p-5 rounded-lg shadow-lg">
-              <div className="flex max-w-full justify-center">
-                <label htmlFor="file" className=" btn btn-primary shadow-md ">
-                  <FaFileImage /> Avatar
+            <div className="flex-1">
+              <div className="form-control my-7 mr-7">
+                <label className="input-group">
+                  <span className="w-44  ">Current Password</span>
+                  <input
+                    onChange={handleChange}
+                    name="currentPassword"
+                    type="password"
+                    placeholder="current password"
+                    className="input input-bordered"
+                  />
                 </label>
-                <input
-                  id="file"
-                  name="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                  type="file"
-                  style={{ display: "none" }}
-                />
               </div>
-              <div className="id mx-7 mt-7">
-                <span>ID : {currentUser._id}</span>
+              <div className="form-control my-7 mr-7">
+                <label className="input-group">
+                  <span className="w-44 ">New password</span>
+                  <input
+                    onChange={handleChange}
+                    name="password"
+                    type="password"
+                    placeholder="new password"
+                    className="input input-bordered"
+                  />
+                </label>
               </div>
-              <div className="flex">
-                <div className="flex-1">
-                  <div className="form-control m-7">
-                    <label className="input-group">
-                      <span className="w-28 ">Username</span>
-                      <input
-                        name="username"
-                        onChange={handleChange}
-                        type="text"
-                        placeholder={currentUser.username}
-                        className="input input-bordered"
-                      />
-                    </label>
-                  </div>
-                  <div className="form-control m-7">
-                    <label className="input-group">
-                      <span className="w-28 ">Email</span>
-                      <input
-                        onChange={handleChange}
-                        name="email"
-                        type="email"
-                        placeholder={currentUser.email}
-                        className="input input-bordered"
-                      />
-                    </label>
-                  </div>
-                  <div className="form-control m-7">
-                    <label className="input-group">
-                      <span className="w-28 ">Phone</span>
-                      <input
-                        onChange={handleChange}
-                        name="phone"
-                        type="number"
-                        placeholder={currentUser.phone}
-                        className="input input-bordered"
-                      />
-                    </label>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <div className="form-control my-7 mr-7">
-                    <label className="input-group">
-                      <span className="w-44  ">Current Password</span>
-                      <input
-                        onChange={handleChange}
-                        name="currentPassword"
-                        type="password"
-                        placeholder="current password"
-                        className="input input-bordered"
-                      />
-                    </label>
-                  </div>
-                  <div className="form-control my-7 mr-7">
-                    <label className="input-group">
-                      <span className="w-44 ">New password</span>
-                      <input
-                        onChange={handleChange}
-                        name="password"
-                        type="password"
-                        placeholder="new password"
-                        className="input input-bordered"
-                      />
-                    </label>
-                  </div>
-                  <div className="form-control my-7 mr-7">
-                    <label className="input-group">
-                      <span className="w-44 ">Confirm password</span>
-                      <input
-                        onChange={handleChange}
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="confirm new password"
-                        className="input input-bordered"
-                      />
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex  p-10 justify-center ">
-                <button onClick={handleClick} className="btn btn-primary">
-                  Update
-                </button>
+              <div className="form-control my-7 mr-7">
+                <label className="input-group">
+                  <span className="w-44 ">Confirm password</span>
+                  <input
+                    onChange={handleChange}
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="confirm new password"
+                    className="input input-bordered"
+                  />
+                </label>
               </div>
             </div>
           </div>
-        </>
-      ) : (
-        <Notfound />
-      )}
+
+          <div className="flex  p-10 justify-center ">
+            <button onClick={handleClick} className="btn btn-primary">
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+
       <Footer />
-    </div>
+    </>
   );
 };
 

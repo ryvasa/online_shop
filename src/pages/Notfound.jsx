@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export const Notfound = () => {
+const Notfound = () => {
   return (
     <>
       {/*
@@ -33,3 +33,4 @@ export const Notfound = () => {
     </>
   );
 };
+export default Notfound;
