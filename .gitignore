@@ -4,6 +4,10 @@ node_modules/
 # build output
 dist/
 
+src/img
+
+*.jpg
+
 # environment variables
 .env
 
