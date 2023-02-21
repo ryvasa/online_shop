@@ -11,9 +11,9 @@ import { adminOnly, requireAuth } from "../middleware/verifyUser.js";
 const router = express.Router();
 
 router.post("/users", adminOnly, addUser);
-router.put("/users/:id", updateUser);
-router.get("/users/:id", getSingleUser);
-router.get("/users", adminOnly, getAllUsers);
+router.put("/users/:id", requireAuth, updateUser);
+router.get("/users/:id", requireAuth, getSingleUser);
+router.get("/users", requireAuth, getAllUsers);
 router.delete("/users/:id", requireAuth, deleteUser);
 
 export default router;

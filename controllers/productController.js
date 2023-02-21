@@ -21,22 +21,43 @@ export const getSingleProduct = async (req, res) => {
 };
 export const getAllProducts = async (req, res) => {
   try {
-    const qNew = req.query.new;
+    const qSort = req.query.sort;
     const qCategory = req.query.category;
+    const qColors = req.query.color;
+    const qSizes = req.query.size;
 
     try {
-      let products;
-      if (qNew) {
-        products = await Product.find().sort({ createdAt: -1 }).limit(1);
-      } else if (qCategory) {
-        products = await Product.find({
-          categories: {
-            $in: [qCategory],
-          },
-        });
-      } else {
-        products = await Product.find();
+      let query = {};
+
+      if (qCategory) {
+        query.categories = {
+          $in: [qCategory],
+        };
       }
+
+      if (qColors) {
+        query.colors = {
+          $in: [qColors],
+        };
+      }
+
+      if (qSizes) {
+        query.sizes = {
+          $in: [qSizes],
+        };
+      }
+
+      let sortOption = {};
+
+      if (qSort === "newest") {
+        sortOption = { createdAt: -1 };
+      } else if (qSort === "highest_price") {
+        sortOption = { price: -1 };
+      } else if (qSort === "lowest_price") {
+        sortOption = { price: 1 };
+      }
+
+      const products = await Product.find(query).sort(sortOption);
 
       res.status(200).json(products);
     } catch (error) {

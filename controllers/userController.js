@@ -42,7 +42,10 @@ export const getSingleUser = async (req, res) => {
 };
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select("-password");
+    const users = await User.find(
+      {},
+      { _id: 1, email: 1, phone: 1, img: 1, username: 1 }
+    );
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json(error);

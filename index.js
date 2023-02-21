@@ -7,6 +7,8 @@ import productRoute from "./routes/productRoute.js";
 import stripeRoute from "./routes/stripeRoute.js";
 import orderRoute from "./routes/orderRoute.js";
 import cartRoute from "./routes/cartRoute.js";
+import subscribeRoute from "./routes/subscribeRoute.js";
+import refreshTokenRoute from "./routes/refreshTokenRoute.js";
 import cookieParser from "cookie-parser";
 import expressWinston from "express-winston";
 import { transports, format } from "winston";
@@ -61,6 +63,8 @@ app.use(productRoute);
 app.use(cartRoute);
 app.use(stripeRoute);
 app.use(orderRoute);
+app.use(refreshTokenRoute);
+app.use(subscribeRoute);
 
 const port = process.env.PORT;
 

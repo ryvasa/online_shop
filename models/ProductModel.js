@@ -26,6 +26,20 @@ const ProductSchema = new mongoose.Schema(
       type: Array,
       required: true,
     },
+    // colors: [
+    //   {
+    //     name: {
+    //       type: String,
+    //     },
+    //     class: {
+    //       type: String,
+    //     },
+    //     selectedClass: {
+    //       type: String,
+    //       default: "ring-gray-400",
+    //     },
+    //   },
+    // ],
     price: {
       type: Number,
       required: true,
