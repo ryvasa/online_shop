@@ -1,4 +1,6 @@
 import React from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Chart from "../components/Chart";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -6,8 +8,16 @@ import NewestUsers from "../components/NewestUsers";
 import Sidebar from "../components/Sidebar";
 import TopProducts from "../components/TopProducts";
 import Widget from "../components/Widget";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const user = useSelector((state) => state.user.currentUser);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user === null) {
+      navigate("/login");
+    }
+  }, []);
   return (
     <>
       <Navbar />

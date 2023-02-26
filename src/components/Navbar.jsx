@@ -16,6 +16,7 @@ const Navbar = () => {
       const res = await axios.delete("http://localhost:5000/logout", user._id);
       dispatch(logoutSuccess());
       navigate("/login");
+      return;
     } catch (err) {
       dispatch(logoutFailure());
     }
@@ -33,33 +34,33 @@ const Navbar = () => {
         <div className="dropdown dropdown-end ">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar ">
             <div className=" rounded-full w-8">
-              {(
-                <img
-                  className="inline-block h-10 w-10 rounded-full ring-2 ring-white"
-                  src={
-                    user.img
-                      ? user.img
-                      : "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"
-                  }
-                  alt=""
-                />
-              ) || <FaUserAlt />}
+              <img
+                className="inline-block h-10 w-10 rounded-full ring-2 ring-white"
+                src={
+                  user && user.img
+                    ? user.img
+                    : "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"
+                }
+                alt=""
+              />
             </div>
           </label>
-          <ul
-            tabIndex={0}
-            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            <li>
-              <Link to={`/users/${user._id}`} className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </Link>
-            </li>
-            <li>
-              <Link onClick={handleClick}>Logout</Link>
-            </li>
-          </ul>
+          {user && user._id && (
+            <ul
+              tabIndex={0}
+              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <Link to={`/users/${user._id}`} className="justify-between">
+                  Profile
+                  <span className="badge">New</span>
+                </Link>
+              </li>
+              <li>
+                <Link onClick={handleClick}>Logout</Link>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     </div>

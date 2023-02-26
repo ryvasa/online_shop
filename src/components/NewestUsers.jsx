@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { FaEye } from "react-icons/fa";
-
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 const NewestUsers = () => {
   const [id, setId] = useState("");
   const [usersArray, setUsersArray] = useState([]);
@@ -67,6 +68,7 @@ const NewestUsers = () => {
       console.log(error);
     }
   };
+  dayjs.extend(relativeTime);
   return (
     <div className="flex-1 w-full py-5 px-2 ">
       <div className=" w-full ">
@@ -105,7 +107,9 @@ const NewestUsers = () => {
                     </div>
                   </div>
                 </td>
-                <td className="text-center">{user.createdAt}</td>
+                <td className="text-center">
+                  {dayjs(user.createdAt).fromNow()}
+                </td>
                 <td className="text-center">{user.role}</td>
                 <td className="text-center">
                   <Link to={`/users/${user._id}`}>

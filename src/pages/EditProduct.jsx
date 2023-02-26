@@ -138,7 +138,10 @@ const EditProduct = () => {
           },
         }
       );
-      setProduct(response.data);
+      setSelectedSize(response.data.sizes);
+      setSelectedCat(response.data.categories);
+      setSelectedColor(response.data.colors);
+
       // navigate("/products");
     } catch (error) {
       console.log(error);

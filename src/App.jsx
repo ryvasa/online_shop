@@ -8,7 +8,6 @@ import ProductList from "./pages/ProductList";
 import Transaction from "./pages/Transaction";
 import EditUser from "./pages/EditUser";
 import User from "./pages/User";
-import Contoh from "./pages/contoh";
 import axios from "axios";
 import Product from "./pages/Product";
 import EditProduct from "./pages/EditProduct";
@@ -34,7 +33,6 @@ function App() {
         <Route path="/products/:id/edit" element={<EditProduct />} />
         <Route path="/orders" element={<OrderList />} />
         <Route path="/orders/:id" element={<OrderDetail />} />
-        <Route path="/contoh" element={<Contoh />} />
         <Route path="/transaction" element={<Transaction />} />
         <Route path="/*" element={<Notfound />} />
       </Routes>

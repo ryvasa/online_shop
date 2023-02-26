@@ -8,13 +8,9 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import jwt_decode from "jwt-decode";
-import { useSelector } from "react-redux";
 
 const User = () => {
-  const currentId = useSelector((state) => state.user.currentUser._id);
-
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
   const cancelButtonRef = useRef(null);
   const { id } = useParams();
   const [userId, setUserId] = useState("");

@@ -62,9 +62,25 @@ const AddUser = () => {
       return Promise.reject(error);
     }
   );
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    if (file) {
+    if (file === null) {
+      const user = { ...inputs };
+      try {
+        const response = await axiosJWT.post(
+          `http://localhost:5000/users`,
+          user,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        navigate("/users");
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
       const fileName = new Date().getTime() + file.name;
       const storage = getStorage(app);
       const storageRef = ref(storage, fileName);
