@@ -41,6 +41,9 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
+    if (!validator.isEmail(req.body.email)) {
+      return res.status(400).json("Email not valid");
+    }
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
       return res.status(404).json(`Username or email notfound!`);

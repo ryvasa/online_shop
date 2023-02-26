@@ -83,11 +83,20 @@ export const updateProduct = async (req, res) => {
     }
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
+      req.body
     );
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+export const productOrder = async (req, res) => {
+  try {
+    const data = req.body;
+    const product = await Product.findByIdAndUpdate(req.params.id, data);
+    if (!product) {
+      return res.status(404).json("Product not found!");
+    }
     res.status(200).json(updatedProduct);
   } catch (error) {
     res.status(500).json(error);

@@ -1,7 +1,8 @@
 import Stripe from "stripe";
 import Order from "../models/OrderModel.js";
 export const payment = async (req, res) => {
-  const { userId, address, tokenId, amount, product, totalQuantity } = req.body;
+  const { userId, userName, address, tokenId, amount, product, totalQuantity } =
+    req.body;
   const products = product.map(
     ({ _id, productName, price, img, quantity }) => ({
       productId: _id,
@@ -11,7 +12,14 @@ export const payment = async (req, res) => {
       quantity: quantity,
     })
   );
-  const order = new Order({ userId, address, amount, products, totalQuantity });
+  const order = new Order({
+    userId,
+    userName,
+    address,
+    amount,
+    products,
+    totalQuantity,
+  });
   const stripe = new Stripe(process.env.STRIPE);
   try {
     await stripe.charges.create({
