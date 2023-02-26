@@ -57,7 +57,7 @@ const Navbar = () => {
             <button className="btn btn-ghost btn-circle ">
               <div className="indicator">
                 <IoShirt className="h-6 w-6" />
-                {product.length > 0 && (
+                {product && product.length > 0 && (
                   <span className=" badge-primary shadow-lg badge badge-sm indicator-item">
                     {product.length}
                   </span>
@@ -66,7 +66,7 @@ const Navbar = () => {
             </button>
           </div>
         </Link>
-        {user && (
+        {user && order && (
           <Link to={"/order"}>
             <div className="tooltip tooltip-bottom" data-tip="order">
               <button className="btn btn-ghost btn-circle">

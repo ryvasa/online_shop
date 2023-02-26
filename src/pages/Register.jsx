@@ -32,6 +32,7 @@ const Register = () => {
       dispatch(registerSuccess(res.data.details));
       navigate("/");
     } catch (err) {
+      console.log(error);
       dispatch(registerFailure());
       setError(err.response.data);
     }

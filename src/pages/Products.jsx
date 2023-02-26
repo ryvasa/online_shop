@@ -57,7 +57,7 @@ export default function Example() {
     };
     getProducts();
   }, [sort, categories, colors, sizes]);
-
+  console.log(products);
   return (
     <>
       <Navbar />
@@ -157,7 +157,7 @@ export default function Example() {
                       >
                         <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
                           <img
-                            src={product.img[3]}
+                            src={product.img}
                             alt=""
                             className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                           />
@@ -173,13 +173,18 @@ export default function Example() {
                                 {product.productName}
                               </Link>
                             </h3>
-                            <p className="mt-1 text-sm text-gray-500">
-                              {product.colors}
-                            </p>
+                            <div className="flex">
+                              {product.colors.map((color, index) => (
+                                <div
+                                  style={{ backgroundColor: color }}
+                                  className="mt-1 w-5 h-5 rounded-full  ml-1 shadow-lg  text-sm text-gray-500"
+                                ></div>
+                              ))}
+                            </div>
                           </div>
 
                           <p className="text-xl font-medium text-gray-900 mb-2">
-                            ${product.price}
+                            $ {product.price}
                             <FaShoppingCart />
                           </p>
                         </div>

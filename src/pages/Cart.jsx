@@ -34,7 +34,7 @@ export const Cart = () => {
                   <li key={index} className="flex py-6">
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                       <img
-                        src={product.img[3]}
+                        src={product.img}
                         alt=""
                         className="h-full w-full object-cover object-center"
                       />

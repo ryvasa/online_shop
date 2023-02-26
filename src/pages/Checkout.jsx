@@ -16,6 +16,7 @@ const Checkout = () => {
     try {
       const res = await axios.post("http://localhost:5000/payment", {
         userId: user._id,
+        userName: user.username,
         product: cart.products,
         address,
         tokenId: token.id,
